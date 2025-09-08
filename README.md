@@ -23,3 +23,15 @@ pip install -r requirements.txt
 # Set the env first & then run the server
 
 uvicorn main:app --reload
+
+# To run test cases
+
+pytest tests/
+
+pytest --cov=src tests/
+
+pytest --cov=src --cov-report=html tests/
+
+    open htmlcov/index.html      # macOS
+    xdg-open htmlcov/index.html   # Linux
+    start htmlcov/index.html      # Windows
