@@ -13,3 +13,7 @@ pytest-cov == 6.2.0
 # For rate limiting
 slowapi == 0.1.9
 redis == 6.4.0
+
+# For models
+sentence-transformers == 5.1.0
+numpy == 2.3.2
