@@ -13,6 +13,8 @@ from fastapi import status
 from src.apps.v1.api_v1_router import api_v1_router
 from src.core.config import get_settings
 from src.common.response.common_response_helper import success_response
+from slowapi.middleware import SlowAPIMiddleware
+from src.common.security.reate_limiter import limiter, rate_limit_exceeded_handler
 
 # Set settings
 settings = get_settings()
@@ -45,6 +47,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Rate limiter middleware
+app.add_middleware(SlowAPIMiddleware)
+app.state.limiter = limiter
+app.add_exception_handler(429, rate_limit_exceeded_handler)
+
 # Root Handeling: If any user trigger base api endpoint it will send this json
 @app.get("/")
 async def root():

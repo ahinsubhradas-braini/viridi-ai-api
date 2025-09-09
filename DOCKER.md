@@ -19,3 +19,11 @@ Powershell comands
 # To remove all unused images
 
     docker system prune -a -v
+
+# For docker logs
+
+    docker logs viridi-ai-app
+
+# To check redis
+
+    docker-compose exec app ping redis-throttling-master

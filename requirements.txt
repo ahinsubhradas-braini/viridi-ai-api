@@ -9,3 +9,7 @@ pytest == 8.4.2
 httpx == 0.28.1
 pytest-asyncio == 1.0.0
 pytest-cov == 6.2.0
+
+# For rate limiting
+slowapi == 0.1.9
+redis == 6.4.0

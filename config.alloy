@@ -1,0 +1,28 @@
+// Alloy config converted from Promtail
+logging {
+  level = "info"
+  format = "logfmt"
+}
+
+server {
+  http {
+    listen_address = "0.0.0.0"
+    listen_port    = 9080
+  }
+}
+
+// Store positions (state) for logs
+loki.source.file "fastapi_logs" {
+  path        = "/var/lib/docker/containers/*/*-json.log"
+  labels      = {
+    job = "viridi-ai-app"
+  }
+  forward_to  = [loki.write.loki_push.receiver]
+}
+
+// Push logs to Loki
+loki.write "loki_push" {
+  endpoint {
+    url = "http://loki:3100/loki/api/v1/push"
+  }
+}

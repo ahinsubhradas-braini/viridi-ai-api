@@ -19,7 +19,7 @@ class JSONFormatter(logging.Formatter):
 logger = logging.getLogger("fastapi-chatbot")
 logger.setLevel(logging.INFO)
 
-# Stream handler for stdout (Promtail reads this)
+# Stream handler for stdout (Alloy reads this)
 handler = logging.StreamHandler(sys.stdout)
 handler.setFormatter(JSONFormatter())
 

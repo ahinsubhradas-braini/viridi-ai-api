@@ -4,6 +4,8 @@ from src.apps.v1.chat.service import ChatService
 from src.common.response.stream_response_helper import Stream_response_helper
 from fastapi.responses import StreamingResponse
 
+from src.common.security.reate_limiter import limit_request
+
 router = APIRouter()
 
 @router.get("/sessions")
@@ -12,6 +14,7 @@ async def get_sessions(request: Request):
     return {"message": "Sessions data"}
 
 @router.post("/session")
+@limit_request("1/minute")
 async def session(request:Request):
     
     async def event_generator():

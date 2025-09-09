@@ -10,8 +10,11 @@ services:
       - "8000:8000"
     volumes:
       - .:/app        # Mount project for live-reload
-      - /app/__pycache__  # Prevent caching issues
     command: uvicorn src.server:app --host 0.0.0.0 --port 8000 --reload
+    depends_on:
+      - redis-throttling-master
+      - loki
+      - grafana
 
   loki:
     image: grafana/loki:2.9.0
@@ -19,12 +22,13 @@ services:
     ports:
       - "3100:3100"
 
-  promtail:
-    image: grafana/promtail:2.9.0
+  alloy:
+    image: grafana/alloy:latest
+    container_name: alloy-agent
     volumes:
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - ./promtail-config.yml:/etc/promtail/config.yml:ro
-    command: -config.file=/etc/promtail/config.yml
+      - ./config.alloy:/etc/alloy/config.alloy:ro
+    ports:
+      - "12345:12345"  # Optional: Alloy UI
     depends_on:
       - loki
 
@@ -38,3 +42,9 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     depends_on:
       - loki
+
+  redis-throttling-master: # Redis master for rate limiting
+    image: redis:8.0
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
