@@ -23,7 +23,3 @@ Powershell comands
 # For docker logs
 
     docker logs viridi-ai-app
-
-# To check redis
-
-    docker-compose exec app ping redis-throttling-master

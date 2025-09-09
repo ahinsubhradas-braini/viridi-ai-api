@@ -12,7 +12,6 @@ services:
       - .:/app        # Mount project for live-reload
     command: uvicorn src.server:app --host 0.0.0.0 --port 8000 --reload
     depends_on:
-      - redis-throttling-master
       - loki
       - grafana
 
@@ -42,9 +41,3 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     depends_on:
       - loki
-
-  redis-throttling-master: # Redis master for rate limiting
-    image: redis:8.0
-    command: ["redis-server", "--appendonly", "yes"]
-    ports:
-      - "6379:6379"

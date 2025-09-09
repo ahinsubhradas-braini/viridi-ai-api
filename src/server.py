@@ -8,6 +8,7 @@ from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.openapi.utils import get_openapi
 from fastapi import status
+from fastapi.staticfiles import StaticFiles
 
 # Imports from project or 3rd party libary dependices
 from src.apps.v1.api_v1_router import api_v1_router

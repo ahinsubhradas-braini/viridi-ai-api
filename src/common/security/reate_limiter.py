@@ -3,13 +3,11 @@ from slowapi import Limiter
 from slowapi.util import get_remote_address
 from fastapi.responses import JSONResponse
 
-# Connect to Redis rate-limiter-db for rate limits
-REDIS_URL = "redis://redis-throttling-master:6379"
-
 # Create limiter with Redis storage
 limiter = Limiter(
     key_func=get_remote_address,
-    storage_uri=f"redis://{REDIS_URL}"
+    storage_uri="memory://",
+    default_limits=["100/minute"]
 )
 
 # Exception handler for 429 errors
