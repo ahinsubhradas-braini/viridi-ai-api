@@ -23,6 +23,9 @@ class Settings(BaseSettings):
     db_host: str
     db_name: str
     
+    # Gemini API Key
+    gemini_api_key: str
+    
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 def get_settings():
     return Settings()
