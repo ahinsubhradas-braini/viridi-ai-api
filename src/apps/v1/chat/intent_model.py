@@ -1,6 +1,8 @@
-from sentence_transformers import SentenceTransformer
+# Import python core libary dependices
 import numpy as np
 
+# Imports from project or 3rd party libary dependices
+from sentence_transformers import SentenceTransformer
 
 def cosine_similarity(vec1, vec2):
     """

@@ -1,11 +1,15 @@
+# Import python core libary dependices
 import asyncio
+
+# Imports fastapi dependices
 from fastapi import APIRouter,Request
+from fastapi.responses import StreamingResponse
+
+# Imports from project or 3rd party libary dependices
 from src.apps.v1.chat.schemas.chatbot_request import SessionRequest
 from src.common.logger import logger
 from src.apps.v1.chat.service import ChatService
 from src.common.response.stream_response_helper import Stream_response_helper
-from fastapi.responses import StreamingResponse
-
 from src.common.security.reate_limiter import limit_request
 from src.apps.v1.chat.intent_model import predict_intent
 from src.apps.v1.chat.constants import Chatbot_Constants

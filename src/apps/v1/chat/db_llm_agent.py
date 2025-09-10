@@ -1,9 +1,12 @@
+# Imports fastapi dependices
+from fastapi import HTTPException
+
+# Imports from project or 3rd party libary dependices
 from langchain_community.utilities import SQLDatabase
 from langchain_community.agent_toolkits import SQLDatabaseToolkit
 from langchain_community.agent_toolkits.sql.base import create_sql_agent
 from langchain_community.chat_models import ChatOpenAI
 from src.core.config import settings
-from fastapi import HTTPException
 
 async def db_llm_agent():
     try:
