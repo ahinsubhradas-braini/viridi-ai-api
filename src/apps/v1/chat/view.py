@@ -8,6 +8,8 @@ from fastapi.responses import StreamingResponse
 
 from src.common.security.reate_limiter import limit_request
 from src.apps.v1.chat.intent_model import predict_intent
+from src.apps.v1.chat.constants import Chatbot_Constants
+
 router = APIRouter()
 
 @router.get("/sessions")
@@ -18,11 +20,17 @@ async def get_sessions(request: Request):
 @router.post("/session")
 @limit_request("1/minute")
 async def session(request:Request,session_data: SessionRequest):
+    # Calling with thread pool executor to avoid blocking the main event loop
     check_prediction_intent = await asyncio.to_thread(predict_intent, session_data.user_query, 0.5)
-    print("check_prediction_intent",check_prediction_intent)
+
     if(check_prediction_intent['score'] < 0.5 or check_prediction_intent['intent'] == 'out_of_domain'):
-        return {"message": "Out of domain query detected. Please ask a relevant question."}
+        return {"message": Chatbot_Constants.OUT_OF_DOMAIN_RESPONSE}
+    elif check_prediction_intent['intent'] == 'greetings':
+     return {"message": f"Hello {session_data.user_name} I am viridi ai, how can I help you ?"}
     else:
+        # Call the chatbot service to do the query and send the response as stream
+        query_response = ChatService.get_query_result(session_data.user_query, session_data.user_id)
+        
         async def event_generator():
             async for event in Stream_response_helper.fake_sse():
                 yield event

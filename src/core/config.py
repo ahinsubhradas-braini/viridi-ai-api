@@ -17,6 +17,9 @@ class Settings(BaseSettings):
     swagger_username: str
     swagger_password: str
     
+    # Vridi primary application database
+    viridi_application_db_url: str
+    
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 def get_settings():
     return Settings()

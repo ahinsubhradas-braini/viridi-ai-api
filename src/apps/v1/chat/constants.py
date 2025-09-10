@@ -1,0 +1,2 @@
+class Chatbot_Constants:
+    OUT_OF_DOMAIN_RESPONSE = "Thank you for the query. As of now I can only answer questions related to accounting, invoicing, purchase orders, pricing, suppliers and vendors. Please ask me something related to these topics."

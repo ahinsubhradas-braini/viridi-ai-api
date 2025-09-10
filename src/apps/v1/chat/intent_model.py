@@ -15,7 +15,6 @@ def cosine_similarity(vec1, vec2):
     vec1_norm = vec1 / np.linalg.norm(vec1, axis=1, keepdims=True)
     vec2_norm = vec2 / np.linalg.norm(vec2, axis=1, keepdims=True)
     
-    # Dot product with transpose: (1,384) x (384,N) = (1,N)
     return np.dot(vec1_norm, vec2_norm.T)
 
 
@@ -58,13 +57,15 @@ def predict_intent(user_query: str, threshold: float = 0.5):
         for intent, phrases in intent_phrases.items()
     }
     query_vec = model.encode([user_query], convert_to_numpy=True)
-
     best_intent = "out_of_domain"
     best_score = 0.0
 
     for intent, vectors in intent_embeddings.items():
         scores = cosine_similarity(query_vec, vectors)  # Shape (1, n_phrases)
+        print(f"Intent: {intent}, Scores: {scores}")
         max_score = float(np.max(scores))
+        print(f"Intent: {intent}, Max Score: {max_score}")
+        
         if max_score > best_score:
             best_score = max_score
             best_intent = intent
