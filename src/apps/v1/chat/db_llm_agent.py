@@ -11,7 +11,8 @@ from src.core.config import settings
 async def db_llm_agent():
     try:
         # Connect to MySQL Database
-        db = SQLDatabase.from_uri(settings.VIRIDI_APPLICATION_DATABASE_URL)
+        VIRIDI_APPLICATION_DATABASE_URL = f"mysql+pymysql://{settings.db_user}:{settings.db_pass}@{settings.db_host}/{settings.db_name}"
+        db = SQLDatabase.from_uri(VIRIDI_APPLICATION_DATABASE_URL)
 
         # LLM
         llm = ChatOpenAI(model_name="gpt-4", temperature=0)

@@ -33,8 +33,10 @@ async def session(request:Request,session_data: SessionRequest):
      return {"message": f"Hello {session_data.user_name} I am viridi ai, how can I help you ?"}
     else:
         # Call the chatbot service to do the query and send the response as stream
-        query_response = ChatService.get_query_result(session_data.user_query, session_data.user_id)
+        query_response = await ChatService.get_query_result(session_data.user_query, session_data.user_id)
         
+        print("query_response",query_response)
+
         async def event_generator():
             async for event in Stream_response_helper.fake_sse():
                 yield event

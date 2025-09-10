@@ -39,6 +39,8 @@ def predict_intent(user_query: str, threshold: float = 0.5):
             "suppliers",
             "vendors",
             "billing",
+            "payments",
+            "profile"
         ],
         "out_of_domain": [
             "weather",
