@@ -1,0 +1,17 @@
+# Environment ignore
+.env
+
+# Virtual environment ignore
+venv/
+venv
+
+# Pycache
+__pycache__/
+.pytest_cache
+
+# Grafana ignore
+grafana/
+
+# Test coverage
+.coverage
+htmlcov/

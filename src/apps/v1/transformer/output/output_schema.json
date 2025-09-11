@@ -1,0 +1,315 @@
+{
+    "Invoice": {
+        "ID": {
+            "_text": "0001442"
+        },
+        "Note": {
+            "_text": "Veitt þjónusta í mars 2025  "
+        },
+        "DueDate": {
+            "_text": "2025-03-31"
+        },
+        "TaxTotal": {
+            "TaxAmount": {
+                "_text": "50470.84",
+                "_attributes": {
+                    "currencyID": "ISK"
+                }
+            },
+            "TaxSubtotal": {
+                "TaxAmount": {
+                    "_text": "50470.84",
+                    "_attributes": {
+                        "currencyID": "ISK"
+                    }
+                },
+                "TaxCategory": {
+                    "ID": {
+                        "_text": "S"
+                    },
+                    "Percent": {
+                        "_text": "24.00"
+                    },
+                    "TaxScheme": {
+                        "ID": {
+                            "_text": "VAT"
+                        }
+                    }
+                },
+                "TaxableAmount": {
+                    "_text": "210295.16",
+                    "_attributes": {
+                        "currencyID": "ISK"
+                    }
+                }
+            }
+        },
+        "IssueDate": {
+            "_text": "2025-03-31"
+        },
+        "ProfileID": {
+            "_text": "urn:fdc:peppol.eu:2017:poacc:billing:01:1.0"
+        },
+        "InvoiceLine": {
+            "ID": {
+                "_text": "1"
+            },
+            "Item": {
+                "Name": {
+                    "_text": "Bókhald, laun og fleira sbr.tímaskýrslu"
+                },
+                "ClassifiedTaxCategory": {
+                    "ID": {
+                        "_text": "S"
+                    },
+                    "Percent": {
+                        "_text": "24.00"
+                    },
+                    "TaxScheme": {
+                        "ID": {
+                            "_text": "VAT"
+                        }
+                    }
+                },
+                "SellersItemIdentification": {
+                    "ID": {
+                        "_text": "1000"
+                    }
+                }
+            },
+            "Price": {
+                "PriceAmount": {
+                    "_text": "13700.01042345",
+                    "_attributes": {
+                        "currencyID": "ISK"
+                    }
+                },
+                "BaseQuantity": {
+                    "_text": "1.00",
+                    "_attributes": {
+                        "unitCode": "C62"
+                    }
+                }
+            },
+            "InvoicedQuantity": {
+                "_text": "15.35",
+                "_attributes": {
+                    "unitCode": "C62"
+                }
+            },
+            "LineExtensionAmount": {
+                "_text": "210295.16",
+                "_attributes": {
+                    "currencyID": "ISK"
+                }
+            }
+        },
+        "_attributes": {
+            "xmlns": "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2",
+            "xmlns:cac": "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2",
+            "xmlns:cbc": "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2",
+            "xmlns:ext": "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2",
+            "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance"
+        },
+        "PaymentMeans": {
+            "PaymentMeansCode": {
+                "_text": "57"
+            }
+        },
+        "PaymentTerms": {
+            "Note": {
+                "_text": "Dráttarvextir reiknast frá gjalddaga ef reikningur er ógreiddur eftir eindaga."
+            }
+        },
+        "TaxPointDate": {
+            "_text": "2025-03-31"
+        },
+        "UBLVersionID": {
+            "_text": "2.1"
+        },
+        "InvoicePeriod": {
+            "EndDate": {
+                "_text": "2025-03-31"
+            },
+            "StartDate": {
+                "_text": "2025-03-01"
+            }
+        },
+        "OrderReference": {
+            "ID": {
+                "_text": "0"
+            }
+        },
+        "CustomizationID": {
+            "_text": "urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0"
+        },
+        "InvoiceTypeCode": {
+            "_text": "380"
+        },
+        "LegalMonetaryTotal": {
+            "PayableAmount": {
+                "_text": "260766.00",
+                "_attributes": {
+                    "currencyID": "ISK"
+                }
+            },
+            "PrepaidAmount": {
+                "_text": "0.00",
+                "_attributes": {
+                    "currencyID": "ISK"
+                }
+            },
+            "TaxExclusiveAmount": {
+                "_text": "210295.16",
+                "_attributes": {
+                    "currencyID": "ISK"
+                }
+            },
+            "TaxInclusiveAmount": {
+                "_text": "260766.00",
+                "_attributes": {
+                    "currencyID": "ISK"
+                }
+            },
+            "LineExtensionAmount": {
+                "_text": "210295.16",
+                "_attributes": {
+                    "currencyID": "ISK"
+                }
+            }
+        },
+        "DocumentCurrencyCode": {
+            "_text": "ISK"
+        },
+        "AccountingCustomerParty": {
+            "Party": {
+                "PartyName": {
+                    "Name": {
+                        "_text": "Sjáland ehf."
+                    }
+                },
+                "EndpointID": {
+                    "_text": "4312032940",
+                    "_attributes": {
+                        "schemeID": "0196"
+                    }
+                },
+                "PostalAddress": {
+                    "Country": {
+                        "IdentificationCode": {
+                            "_text": "IS"
+                        }
+                    },
+                    "CityName": {
+                        "_text": "Garðabæ"
+                    },
+                    "PostalZone": {
+                        "_text": "210"
+                    },
+                    "StreetName": {
+                        "_text": "Vesturbrú 7"
+                    }
+                },
+                "PartyLegalEntity": {
+                    "CompanyID": {
+                        "_text": "4312032940",
+                        "_attributes": {
+                            "schemeID": "0196"
+                        }
+                    },
+                    "RegistrationName": {
+                        "_text": "Sjáland ehf."
+                    }
+                },
+                "PartyIdentification": {
+                    "ID": {
+                        "_text": "4312032940",
+                        "_attributes": {
+                            "schemeID": "0196"
+                        }
+                    }
+                }
+            }
+        },
+        "AccountingSupplierParty": {
+            "Party": {
+                "Contact": {
+                    "Name": {
+                        "_text": "1"
+                    },
+                    "Telephone": {
+                        "_text": "5851100"
+                    },
+                    "ElectronicMail": {
+                        "_text": "proteus@proteus.is"
+                    }
+                },
+                "PartyName": {
+                    "Name": {
+                        "_text": "Proteus ehf."
+                    }
+                },
+                "EndpointID": {
+                    "_text": "6806003170",
+                    "_attributes": {
+                        "schemeID": "0196"
+                    }
+                },
+                "PostalAddress": {
+                    "Country": {
+                        "IdentificationCode": {
+                            "_text": "IS"
+                        }
+                    },
+                    "CityName": {
+                        "_text": "Reykjavík"
+                    },
+                    "PostalZone": {
+                        "_text": "108"
+                    },
+                    "StreetName": {
+                        "_text": "Ármúla 24"
+                    }
+                },
+                "PartyTaxScheme": {
+                    "CompanyID": {
+                        "_text": "IS70153"
+                    },
+                    "TaxScheme": {
+                        "ID": {
+                            "_text": "VAT"
+                        }
+                    }
+                },
+                "PartyLegalEntity": {
+                    "CompanyID": {
+                        "_text": "6806003170",
+                        "_attributes": {
+                            "schemeID": "0196"
+                        }
+                    },
+                    "RegistrationName": {
+                        "_text": "Proteus ehf."
+                    }
+                },
+                "PartyIdentification": {
+                    "ID": {
+                        "_text": "6806003170",
+                        "_attributes": {
+                            "schemeID": "0196"
+                        }
+                    }
+                }
+            }
+        },
+        "AdditionalDocumentReference": {
+            "ID": {
+                "_text": "2025-04-25"
+            },
+            "DocumentDescription": {
+                "_text": "EINDAGI"
+            }
+        }
+    },
+    "_comment": "dk hugbúnaður ehf. (UBL-Invoice-2.1.xml)"
+}

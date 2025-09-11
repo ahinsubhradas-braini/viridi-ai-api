@@ -1,0 +1,16 @@
+**Target Output Schema:**
+```json
+{{output_schema}}
+```
+
+**Source Input Data:**
+```json
+{{input_schema}}
+```
+
+**Task:** Generate a complete Jinja2 template that transforms the input data to match the target schema exactly and upon parse it should generate clean JSON.
+**Required Template Features:**
+- Input Data is in variable `input_data`
+- Don't include comments, just the Jinja2 template code.
+- Don't include any additional text or explanations.
+- Don't Assume the input data will be Array unless specified in the input schema.

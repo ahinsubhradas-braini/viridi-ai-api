@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: viridi-ai-app
+    environment:
+      - LOG_LEVEL=INFO
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app        # Mount project for live-reload
+    command: uvicorn src.server:app --host 0.0.0.0 --port 8000 --reload
+    depends_on:
+      - loki
+      - grafana
+
+  loki:
+    image: grafana/loki:2.9.0
+    command: -config.file=/etc/loki/local-config.yaml
+    ports:
+      - "3100:3100"
+
+  alloy:
+    image: grafana/alloy:latest
+    container_name: alloy-agent
+    volumes:
+      - ./config.alloy:/etc/alloy/config.alloy:ro
+    ports:
+      - "12345:12345"  # Optional: Alloy UI
+    depends_on:
+      - loki
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - loki

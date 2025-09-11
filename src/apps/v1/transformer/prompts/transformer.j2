@@ -1,0 +1,25 @@
+## Data Transformation Request
+
+**Target Output Schema:**
+```json
+{{output_schema}}
+```
+
+**Source Input Data:**
+```json
+{{input_schema}}
+```
+
+**Task**: Generate a complete EJS template that transforms the input data to match the target schema exactly and upon render it should generate clean JSON.
+
+**Required Template Features**:
+
+-Input data is in variable inputData
+
+-Use EJS syntax (<%= %> for expressions, <% %> for logic)
+
+-Don't include comments, just the EJS template code
+
+-Don't include any additional text or explanations
+
+-Don't assume the input data will be an Array unless specified in the input schema
