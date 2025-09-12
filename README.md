@@ -20,6 +20,9 @@ Go to cmd: venv\Scripts\activate.bat # For current settings
 
 pip install -r requirements.txt
 
+run pip install torch==2.2.2+cpu --index-url https://download.pytorch.org/whl/cpu before 'pip install sentence-transformers'
+
+
 # Set the env first & then run the server
 
 uvicorn main:app --reload

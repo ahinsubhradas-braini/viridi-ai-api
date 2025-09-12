@@ -32,7 +32,7 @@ app = FastAPI(
     version = settings.application_version,
     contact={
         "name": "Contact us",
-        "url": "http://development-team.com/contact/",
+        "url": "https://www.viridi4.com/",
         "email": "ahin.subhra.das@brainiuminfotech.com",
     },
     docs_url=None, # Disable deafult docs url for swagger
