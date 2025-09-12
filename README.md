@@ -20,6 +20,8 @@ Go to cmd: venv\Scripts\activate.bat # For current settings
 
 pip install -r requirements.txt
 
+pip install -r dev_requirements.txt
+
 run pip install torch==2.2.2+cpu --index-url https://download.pytorch.org/whl/cpu before 'pip install sentence-transformers'
 
 
@@ -40,3 +42,7 @@ pytest --cov=src --cov-report=html tests/
     open htmlcov/index.html      # macOS
     xdg-open htmlcov/index.html   # Linux
     start htmlcov/index.html      # Windows
+
+# S3 url
+
+https://viridi-ai.s3.ap-south-1.amazonaws.com/templates/test_04c07ab34b004fe684ce281ba7aed6e8.ejs

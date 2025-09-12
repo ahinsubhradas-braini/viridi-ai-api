@@ -30,8 +30,11 @@ class Settings(BaseSettings):
     gemini_model: str
     gemini_timeout: int
     
-    # Gemini API Key
-    gemini_api_key: str
+    # Aws s3 creds
+    aws_access_key: str
+    aws_secret_key: str
+    aws_region: str
+    viridi_ai_bucket_name: str
     
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 def get_settings():

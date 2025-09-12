@@ -6,7 +6,7 @@ from typing import Dict, Any, Optional
 from openai import OpenAI
 from openai.types.chat import ChatCompletion
 from src.apps.v1.transformer.lib.prompt_manager import PromptManager
-
+import re
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -85,33 +85,20 @@ class TransformerAgent:
         return code.strip()
 
     def _clean_ejs_code(self, code: str) -> str:
-        """
-        Clean EJS code by removing markdown code blocks and unnecessary whitespace.
-        Converts escaped Unicode sequences back to normal characters for readability,
-        but preserves JSON escaping inside <%- JSON.stringify(...) %>.
-        """
-        if not code:
-            return ""
+        # Remove markdown code fences and language tags
+        cleaned = re.sub(r"``````", "", code)
 
-        # Remove code block markers
-        code_markers = [
-            ('```ejs', '```'),
-            ('```', '```'),
-            ('`', '`')
-        ]
-        for start_marker, end_marker in code_markers:
-            if code.startswith(start_marker):
-                code = code[len(start_marker):].strip()
-            if code.endswith(end_marker):
-                code = code[:-len(end_marker)].strip()
+        # Remove literal "\n" and escaped backslashes
+        cleaned = cleaned.replace(r"\n", "").replace(r"\\", "\\")
 
-        # Decode unicode sequences safely (keeps quotes in JSON.stringify intact)
-        import re
-        def decode_unicode(match):
-            return match.group(0).encode('utf-8').decode('unicode_escape')
-        code = re.sub(r'(\\u[0-9a-fA-F]{4})', decode_unicode, code)
+        # Strip whitespace from start and end
+        cleaned = cleaned.strip()
 
-        return code.strip()
+        # Optional: Remove wrapping braces { } if your EJS starts with them
+        if cleaned.startswith("{") and cleaned.endswith("}"):
+            cleaned = cleaned[1:-1].strip()
+
+        return cleaned
 
 
     def _validate_schemas(self, input_schema: Dict[str, Any], output_schema: Dict[str, Any]) -> None:
@@ -215,8 +202,8 @@ class TransformerAgent:
         if not rendering_code:
             raise ValueError("Empty response from the model")
             
-        cleaned_code = self._clean_ejs_code(rendering_code.strip())
-        
+        # cleaned_code = self._clean_ejs_code(rendering_code.strip())
+        cleaned_code = rendering_code.strip()
         if not cleaned_code:
             raise ValueError("No valid Ejs code found in the response")
         
