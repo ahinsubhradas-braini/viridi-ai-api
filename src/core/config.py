@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     cors_origins: List[str]
     application_env: str
     application_url: str
+    port: int
     
     # Swagger creds
     swagger_username: str

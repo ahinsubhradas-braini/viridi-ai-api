@@ -24,6 +24,8 @@ pip install -r requirements.txt
 
 uvicorn main:app --reload
 
+uvicorn src.server:app --host 0.0.0.0 --port 8012 --reload
+
 # To run test cases
 
 pytest tests/
