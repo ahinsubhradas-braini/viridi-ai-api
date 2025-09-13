@@ -1,11 +1,13 @@
+# Import python core libary dependices
 import requests
 import json
 import os
 
+# Imports from project or 3rd party libary dependices
 from src.apps.v1.transformer.transformer_agent import TransformerAgent
 from src.core.config import settings
 
-def transform_data(api_data_url: dict):
+def transform_data(api_data_url: dict,api_provider_name:str):
     """
     Transform 3rd party api response data
     """
@@ -19,15 +21,16 @@ def transform_data(api_data_url: dict):
     
     # Calling transformer class
     transformer = TransformerAgent(
-        api_key=settings.gemini_api_key,
-        base_url=settings.gemini_api_url,
-        model=settings.gemini_model,
-        timeout=settings.gemini_timeout
+        api_key=settings.open_router_key,
+        base_url=settings.open_router_url,
+        model=settings.open_router_model,
+        timeout=settings.llm_timeout
     )
     # # Calling transformer method to transform data
     get_transformer_response = transformer.generate_transformer(
         input_schema= input_schema,
-        output_schema= output_schema
+        output_schema= output_schema,
+        api_provider_name = api_provider_name
     )
 
     return get_transformer_response

@@ -25,10 +25,10 @@ class Settings(BaseSettings):
     db_name: str
     
     # Llm creds
-    gemini_api_key: str
-    gemini_api_url: str
-    gemini_model: str
-    gemini_timeout: int
+    open_router_key: str
+    open_router_url: str
+    open_router_model: str
+    llm_timeout: int
     
     # Aws s3 creds
     aws_access_key: str

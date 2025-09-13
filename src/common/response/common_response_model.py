@@ -9,3 +9,4 @@ class ResponseModel(BaseModel):
     code: int
     message: str
     data: Optional[Any]  # can hold anything (dict, list, str, etc.)
+    type: Any

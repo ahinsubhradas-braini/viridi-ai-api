@@ -4,7 +4,7 @@ from jinja2 import Environment, FileSystemLoader
 class PromptManager:
     def __init__(self, prompts_dir: str = "prompts"):
         """
-        Initialize the prompt manager with Jinja2 templates.
+        Initialize the prompt manager with Ejs templates.
 
         :param prompts_dir: Directory containing prompt templates
         """

@@ -9,6 +9,7 @@ from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.openapi.utils import get_openapi
 from fastapi import status
 from fastapi.staticfiles import StaticFiles
+from fastapi.exceptions import RequestValidationError
 
 # Imports from project or 3rd party libary dependices
 from src.apps.v1.api_v1_router import api_v1_router
@@ -16,6 +17,7 @@ from src.core.config import get_settings
 from src.common.response.common_response_helper import success_response
 from slowapi.middleware import SlowAPIMiddleware
 from src.common.security.reate_limiter import limiter, rate_limit_exceeded_handler
+# from src.common.security.exception_handler import ExceptionHandlersMixin
 
 # Set settings
 settings = get_settings()
@@ -54,17 +56,26 @@ app.add_middleware(SlowAPIMiddleware)
 app.state.limiter = limiter
 app.add_exception_handler(429, rate_limit_exceeded_handler)
 
+# Add exception handlers middleware
+# exception_handlers = ExceptionHandlersMixin()
+
+# app.add_exception_handler(HTTPException, exception_handlers.http_exception_handler)
+# app.add_exception_handler(RequestValidationError, exception_handlers.validation_exception_handler)
+# app.add_exception_handler(ValueError, exception_handlers.value_error_handler)
+
 # Root Handeling: If any user trigger base api endpoint it will send this json
 @app.get("/",include_in_schema=False)
 async def root():
     return await success_response(
+        status="success",
+        code= 200,
         data={
             "message": f"Hello from {settings.application_name},please check {settings.application_url}",
             "environment": settings.application_env,
             "application_name": settings.application_name,
         },
         message="Welcome to API",
-        code= status.HTTP_200_OK
+        type= "Success"
     )
 
 """ 

@@ -1,12 +1,17 @@
+# Import python core libary dependices
 import json
 import logging
 import time
 import os
+import re
 from typing import Dict, Any, Optional
+
+# Imports from project or 3rd party libary dependices
 from openai import OpenAI
 from openai.types.chat import ChatCompletion
 from src.apps.v1.transformer.lib.prompt_manager import PromptManager
-import re
+from src.common.s3_service import Aws_S3_Service
+from src.core.config import settings
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -85,20 +90,28 @@ class TransformerAgent:
         return code.strip()
 
     def _clean_ejs_code(self, code: str) -> str:
-        # Remove markdown code fences and language tags
-        cleaned = re.sub(r"``````", "", code)
+        if not code:
+            return ""
 
-        # Remove literal "\n" and escaped backslashes
-        cleaned = cleaned.replace(r"\n", "").replace(r"\\", "\\")
+        # Remove code block markers
+        code_markers = [
+            ('```ejs', '```'),
+            ('```', '```'),
+            ('`', '`')
+        ]
+        for start_marker, end_marker in code_markers:
+            if code.startswith(start_marker):
+                code = code[len(start_marker):].strip()
+            if code.endswith(end_marker):
+                code = code[:-len(end_marker)].strip()
 
-        # Strip whitespace from start and end
-        cleaned = cleaned.strip()
+        # Decode unicode sequences safely (keeps quotes in JSON.stringify intact)
+        import re
+        def decode_unicode(match):
+            return match.group(0).encode('utf-8').decode('unicode_escape')
+        code = re.sub(r'(\\u[0-9a-fA-F]{4})', decode_unicode, code)
 
-        # Optional: Remove wrapping braces { } if your EJS starts with them
-        if cleaned.startswith("{") and cleaned.endswith("}"):
-            cleaned = cleaned[1:-1].strip()
-
-        return cleaned
+        return code.strip()
 
 
     def _validate_schemas(self, input_schema: Dict[str, Any], output_schema: Dict[str, Any]) -> None:
@@ -137,7 +150,7 @@ class TransformerAgent:
                     messages=[
                         {
                             "role": "system",
-                            "content": "You are an expert at creating Jinja2 templates for data transformation. Return only the Jinja2 template code without any explanations or markdown formatting."
+                            "content": "You are an expert at creating EJS templates for data transformation. Return only the EJS template code without any explanations, markdown formatting, backslash (\\), forward Slash (/), new line(/n)  wrapper like JSON.stringify or variable."
                         },
                         {
                             "role": "user", 
@@ -145,10 +158,9 @@ class TransformerAgent:
                         }
                     ],
                     temperature=0.1,  # Lower temperature for more consistent output
-                    max_tokens=2048   # Reasonable limit for template generation
+                    max_tokens=4096   # Reasonable limit for template generation
                 )
                 
-                print("response",response)
                 # Track performance
                 response_time = time.time() - start_time
                 self._request_count += 1
@@ -166,24 +178,27 @@ class TransformerAgent:
                 
         raise Exception(f"All {self.max_retries} API requests failed. Last error: {str(last_exception)}")
 
-    def generate_transformer(self, input_schema: Dict[str, Any], output_schema: Dict[str, Any]) -> str:
+    def generate_transformer(self, input_schema: Dict[str, Any], output_schema: Dict[str, Any],api_provider_name:str) -> str:
         """
-        Generate a Jinja2 transformer template using the AI model.
+        Generate a Ejs transformer template using the AI model.
 
         :param input_schema: Schema or sample of the input data
         :param output_schema: Schema of the desired output data
-        :return: Generated Jinja2 template as string
+        :return: Generated Ejs template as string
         :raises ValueError: If schemas are invalid or response is empty
         :raises Exception: If API request fails
         """
         # Validate inputs
         self._validate_schemas(input_schema, output_schema)
 
+        
+        # Minify JSON to reduce token usage
+        minified_input_schema = json.dumps(input_schema, separators=(',', ':'))
         # Render the prompt
         try:
             prompt = self.prompt_manager.render_prompt(
                 "transformer", 
-                input_schema=json.dumps(input_schema, indent=2), 
+                input_schema=json.dumps(minified_input_schema, indent=2), 
                 output_schema=json.dumps(output_schema, indent=2)
             )
         except Exception as e:
@@ -197,18 +212,35 @@ class TransformerAgent:
             raise ValueError("No valid response from the model")
         
         # Extract and clean the response
-        print("response.choices",response.choices)
         rendering_code = response.choices[0].message.content
+        
         if not rendering_code:
             raise ValueError("Empty response from the model")
-            
-        # cleaned_code = self._clean_ejs_code(rendering_code.strip())
-        cleaned_code = rendering_code.strip()
+        # print("rendering_code.strip()",rendering_code.strip())
+        cleaned_code = self._clean_ejs_code(rendering_code.strip())
+        # cleaned_code = rendering_code.strip()
+
         if not cleaned_code:
             raise ValueError("No valid Ejs code found in the response")
         
         logger.info("Successfully generated transformer template")
-        return cleaned_code
+
+        # Creating templates in local templates
+        # templates_dir = "templates"
+        # template_path = os.path.join(templates_dir, f"{api_provider_name}.ejs")
+        # os.makedirs(templates_dir, exist_ok=True)
+        # with open(template_path, 'w', encoding='utf-8') as f:
+        #     f.write(cleaned_code)
+
+        S3_Helper = Aws_S3_Service(
+            settings.aws_access_key,
+            settings.aws_secret_key,
+            settings.aws_region
+        )
+
+        public_url = S3_Helper.upload_ejs_as_object_to_s3('templates',f"{api_provider_name}.ejs",cleaned_code)
+
+        return public_url
 
     def get_performance_stats(self) -> Dict[str, Any]:
         """
