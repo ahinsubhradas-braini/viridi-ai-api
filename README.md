@@ -43,6 +43,8 @@ pytest --cov=src --cov-report=html tests/
     xdg-open htmlcov/index.html   # Linux
     start htmlcov/index.html      # Windows
 
+pytest -vv -s tests/test_hmac_functional.py
+
 # S3 url
 
 https://viridi-ai.s3.ap-south-1.amazonaws.com/templates/test_04c07ab34b004fe684ce281ba7aed6e8.ejs
