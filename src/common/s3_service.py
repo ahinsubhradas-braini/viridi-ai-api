@@ -2,6 +2,8 @@ import boto3
 
 class Aws_S3_Service:
     def __init__(self, access_key, secret_key, region):
+        print("Initializing S3 class", access_key, secret_key,region)
+
         self.s3_client = boto3.client(
             's3',
             aws_access_key_id=access_key,
@@ -20,6 +22,10 @@ class Aws_S3_Service:
         :param make_public: If True, makes the file public
         """
         try:
+            print("bucket_name --->",bucket_name)
+            print("key --->",key)
+            print("content --->",content)
+            print("aws client --->",self.s3_client)
             extra_args = {'ContentType': content_type}
             if make_public:
                 extra_args['ACL'] = 'public-read'

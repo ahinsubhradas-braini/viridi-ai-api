@@ -90,6 +90,7 @@ class TransformerAgent:
         return code.strip()
 
     def _clean_ejs_code(self, code: str) -> str:
+        print("<--- Start cleaning ejs --->")
         if not code:
             return ""
 
@@ -158,7 +159,7 @@ class TransformerAgent:
                         }
                     ],
                     temperature=0.1,  # Lower temperature for more consistent output
-                    max_tokens=4096   # Reasonable limit for template generation
+                    max_tokens=2600   # Reasonable limit for template generation
                 )
                 
                 # Track performance
@@ -216,9 +217,7 @@ class TransformerAgent:
         
         if not rendering_code:
             raise ValueError("Empty response from the model")
-        # print("rendering_code.strip()",rendering_code.strip())
         cleaned_code = self._clean_ejs_code(rendering_code.strip())
-        # cleaned_code = rendering_code.strip()
 
         if not cleaned_code:
             raise ValueError("No valid Ejs code found in the response")
@@ -226,11 +225,11 @@ class TransformerAgent:
         logger.info("Successfully generated transformer template")
 
         # Creating templates in local templates
-        # templates_dir = "templates"
-        # template_path = os.path.join(templates_dir, f"{api_provider_name}.ejs")
-        # os.makedirs(templates_dir, exist_ok=True)
-        # with open(template_path, 'w', encoding='utf-8') as f:
-        #     f.write(cleaned_code)
+        templates_dir = "templates"
+        template_path = os.path.join(templates_dir, f"{api_provider_name}.ejs")
+        os.makedirs(templates_dir, exist_ok=True)
+        with open(template_path, 'w', encoding='utf-8') as f:
+            f.write(cleaned_code)
 
         S3_Helper = Aws_S3_Service(
             settings.aws_access_key,
