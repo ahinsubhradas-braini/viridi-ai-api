@@ -2,7 +2,7 @@
 from fastapi import APIRouter,Request
 # Imports from project or 3rd party libary dependices
 from src.common.security.reate_limiter import limit_request
-from src.apps.v1.transformer.schemas.transformer_schema import TransformRequest
+from src.apps.v1.transformer.schemas.transformer_schema import CheckHmacRequest, TransformRequest
 from src.apps.v1.transformer.service import transform_data
 
 router = APIRouter()
@@ -17,3 +17,11 @@ def transform_third_party_data(request: Request, body: TransformRequest):
         "message": f"{body.api_provider_name} api response transform to unimaze response pattern",
         "ejs_public_url": get_response
     }}
+
+@router.post("/check-hmac")
+@limit_request("5/minute")
+def check_hmac(request:Request,body: CheckHmacRequest):
+    print("request in check-hmac ==============>",body)
+    return {
+        "message":"Done with check-hmac"
+    }

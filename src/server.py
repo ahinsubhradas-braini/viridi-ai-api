@@ -2,14 +2,14 @@
 from contextlib import asynccontextmanager
 
 # Imports fastapi dependices
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.openapi.utils import get_openapi
-from fastapi import status
-from fastapi.staticfiles import StaticFiles
-from fastapi.exceptions import RequestValidationError
+from src.common.security.hmac_checker import hmac_auth_middleware
+from starlette.middleware.base import BaseHTTPMiddleware
+from fastapi.responses import JSONResponse
 
 # Imports from project or 3rd party libary dependices
 from src.apps.v1.api_v1_router import api_v1_router
@@ -17,7 +17,6 @@ from src.core.config import get_settings
 from src.common.response.common_response_helper import success_response
 from slowapi.middleware import SlowAPIMiddleware
 from src.common.security.reate_limiter import limiter, rate_limit_exceeded_handler
-# from src.common.security.exception_handler import ExceptionHandlersMixin
 
 # Set settings
 settings = get_settings()
@@ -56,12 +55,22 @@ app.add_middleware(SlowAPIMiddleware)
 app.state.limiter = limiter
 app.add_exception_handler(429, rate_limit_exceeded_handler)
 
-# Add exception handlers middleware
-# exception_handlers = ExceptionHandlersMixin()
-
-# app.add_exception_handler(HTTPException, exception_handlers.http_exception_handler)
-# app.add_exception_handler(RequestValidationError, exception_handlers.validation_exception_handler)
-# app.add_exception_handler(ValueError, exception_handlers.value_error_handler)
+# Add hmac middleware for security
+class CustomHmacMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request, call_next):
+            try:
+            # Call the hmac checker to check signature key
+                await hmac_auth_middleware(request)
+            except Exception as exc:
+                print("1111111111111111111111")
+            # If token validation fails due to other exceptions, return a generic error response
+                return JSONResponse(content={"detail": f"Error: {str(exc)}"}, status_code=500)
+            
+            # If token validation succeeds, continue to the next middleware or route handler
+            response = await call_next(request)
+            return response
+        
+app.add_middleware(CustomHmacMiddleware)
 
 # Root Handeling: If any user trigger base api endpoint it will send this json
 @app.get("/",include_in_schema=False)
@@ -95,7 +104,11 @@ async def verify_credentials(credentials: HTTPBasicCredentials = Depends(securit
 # Protect Swagger UI
 @app.get("/docs", include_in_schema=False)
 async def get_documentation(_: bool = Depends(verify_credentials)):
-    return get_swagger_ui_html(openapi_url="/openapi.json", title="Secure Docs")
+    return get_swagger_ui_html(openapi_url="/openapi.json", title="Secure Docs",init_oauth={
+            "additionalQueryStringParams": {
+                "x-request-from": "swagger-ui"
+            }
+        })
 
 # Protect OpenAPI schema too
 @app.get("/openapi.json", include_in_schema=False)
