@@ -61,14 +61,11 @@ class CustomHmacMiddleware(BaseHTTPMiddleware):
             try:
             # Call the hmac checker to check signature key
                 await hmac_auth_middleware(request)
+                response = await call_next(request)
+                return response
             except Exception as exc:
-                print("1111111111111111111111")
             # If token validation fails due to other exceptions, return a generic error response
                 return JSONResponse(content={"detail": f"Error: {str(exc)}"}, status_code=500)
-            
-            # If token validation succeeds, continue to the next middleware or route handler
-            response = await call_next(request)
-            return response
         
 app.add_middleware(CustomHmacMiddleware)
 

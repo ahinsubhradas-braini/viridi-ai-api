@@ -6,7 +6,7 @@ from pydantic import BaseModel
 
 class ResponseModel(BaseModel):
     status: str          # "success" / "error"
-    code: int
+    status_code: int
     message: str
     data: Optional[Any]  # can hold anything (dict, list, str, etc.)
     type: Any

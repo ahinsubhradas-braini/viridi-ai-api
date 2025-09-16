@@ -12,6 +12,8 @@ async def hmac_auth_middleware(request:Request):
         return request
     elif request.url.path == "/openapi.json":
         return request
+    elif request.url.path == "/favicon.ico":
+        return request
     
     signature = request.headers.get("X-Signature")
     expiry = request.headers.get("X-Expiry")
