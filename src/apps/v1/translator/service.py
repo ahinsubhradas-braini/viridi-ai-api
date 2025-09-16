@@ -1,24 +1,50 @@
 import boto3
+from src.core.config import settings
 
-async def get_translated_text(data):
-    translated_data = data.copy()
-    for field in data.fields:
-            keys = field.split(".")
-            sub_data = translated_data
-            for k in keys[:-1]:
-                sub_data = sub_data.get(k, {})
-            last_key = keys[-1]
-            if last_key in sub_data:
-                sub_data[last_key] = translate_text(sub_data[last_key], data.source_lang, data.target_lang)
+translate_client = boto3.client(
+         "translate",
+         aws_access_key_id=settings.aws_translate_sm_access_key,
+         aws_secret_access_key=settings.aws_translate_sm_secret_key,
+         region_name=settings.aws_translate_sm_region
+        )
 
+async def get_translated_text(data_input,source_lang,target_lang):
+    translated_data = data_input.copy()
+    translated_data = await translate_fields(
+        translated_data,
+        source_lang,
+        target_lang
+    )
     return translated_data
+
+async def translate_fields(sub_data, source_lang, target_lang):
+    """Recursively translate only keys marked as True in fields JSON"""
+    for key, value in sub_data.items():
+        if key not in sub_data:
+            continue
+        if isinstance(value, dict) and isinstance(sub_data[key], dict):
+            # Nested fields
+            sub_data[key] = await translate_fields(sub_data[key], value, source_lang, target_lang)
+        elif value is not None and isinstance(sub_data[key], str):
+            # Translate only marked string fields
+            sub_data[key] = await translate_text(sub_data[key], source_lang, target_lang)
+    return sub_data
+
 async def translate_text(text: str, source_lang: str, target_lang: str) -> str:
     if not text:
         return text
-    translate_client = boto3.client("translate", region_name="us-east-1")
-    response = translate_client.translate_text(
-        Text=text,
-        SourceLanguageCode=source_lang,
-        TargetLanguageCode=target_lang
-    )
-    return response["TranslatedText"]
+    
+    print("text",text)
+    print("source_lang",source_lang)
+    print("target_lang",target_lang)
+
+    try:
+        response = translate_client.translate_text(
+            Text=text,
+            SourceLanguageCode=source_lang,
+            TargetLanguageCode=target_lang
+        )
+        print("Translate Done ====>",response)
+        return response["TranslatedText"]
+    except Exception as e:
+        print("Error in translate",e)

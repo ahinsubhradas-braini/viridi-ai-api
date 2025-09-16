@@ -14,6 +14,8 @@ async def hmac_auth_middleware(request:Request):
         return request
     elif request.url.path == "/favicon.ico":
         return request
+    elif request.url.path == "/api/v1/ai-translator/translate":
+        return request
     
     signature = request.headers.get("X-Signature")
     expiry = request.headers.get("X-Expiry")

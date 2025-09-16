@@ -6,5 +6,4 @@ class TranslateRequest(BaseModel):
     module_id: str
     source_lang: str   # dynamic
     target_lang: str   # dynamic
-    fields: list[str]
-    data: dict
+    source_data: dict

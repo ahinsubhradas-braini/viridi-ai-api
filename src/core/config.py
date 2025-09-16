@@ -35,6 +35,11 @@ class Settings(BaseSettings):
     aws_secret_key: str
     aws_region: str
     viridi_ai_bucket_name: str
+
+    # Aws translate & secret manager key
+    aws_translate_sm_access_key: str
+    aws_translate_sm_secret_key: str
+    aws_translate_sm_region: str
     
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 def get_settings():
