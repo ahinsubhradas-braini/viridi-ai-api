@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from src.apps.v1.chat import view as chat_view
+# from src.apps.v1.chat import view as chat_view
 from src.apps.v1.transformer import view as transformer_view
 
 api_v1_router = APIRouter()
