@@ -81,7 +81,7 @@ async def root():
             "application_name": settings.application_name,
         },
         message="Welcome to API",
-        type= "Success"
+        module= "App"
     )
 
 """ 

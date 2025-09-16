@@ -9,4 +9,4 @@ class ResponseModel(BaseModel):
     status_code: int
     message: str
     data: Optional[Any]  # can hold anything (dict, list, str, etc.)
-    type: Any
+    module: Any
