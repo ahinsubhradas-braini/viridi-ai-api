@@ -5,6 +5,7 @@ import hmac, hashlib, time
 
 from src.common.sm_service import get_any_secret
 from src.core.config import settings
+from rich import print
 
 async def hmac_auth_middleware(request:Request):
     # Without auth middleware api path's
@@ -16,7 +17,7 @@ async def hmac_auth_middleware(request:Request):
     expiry = request.headers.get("X-Expiry")
     nonce = request.headers.get("X-Nonce")
 
-    print("signature expiry nonce",signature,expiry,nonce)
+    print(f"[bold blue]<========= HMAC signature expiry nonce {signature,expiry,nonce} ==========> [/bold blue]")
 
     if not all([signature, expiry, nonce]):
         raise HTTPException(status_code=401, detail="Missing auth headers")
@@ -40,10 +41,10 @@ async def hmac_auth_middleware(request:Request):
     print("Expected:", expected_sig)
 
     if not hmac.compare_digest(signature, expected_sig):
-        print("Signature mismatch")
+        print("[bold red] <========= HMAC Signature mismatch ==========> [/bold red]")
         raise HTTPException(status_code=401, detail="Invalid signature")
     else:
-        print("Signature matched")
+        print("[bold green] <========= HMAC Signature matched ==========> [/bold green]")
 
     return request
 
