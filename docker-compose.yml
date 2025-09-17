@@ -14,6 +14,7 @@ services:
     depends_on:
       - loki
       - grafana
+      - redis
 
   loki:
     image: grafana/loki:2.9.0
@@ -41,3 +42,17 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     depends_on:
       - loki
+
+  redis:
+    image: redis:7.2
+    container_name: redis_server
+    ports:
+      - "6379:6379"
+    volumes:
+      # Named volume for persistent data
+      - redis_data:/data
+    command: ["redis-server", "--appendonly", "yes"] # Enable AOF persistence
+
+volumes:
+  redis_data:
+    driver: local

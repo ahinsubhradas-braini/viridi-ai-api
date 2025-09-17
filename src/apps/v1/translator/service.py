@@ -1,5 +1,7 @@
 import boto3
+import json
 from src.core.config import settings
+from src.redis_client import redis_cache
 
 translate_client = boto3.client(
          "translate",
@@ -48,3 +50,33 @@ async def translate_text(text: str, source_lang: str, target_lang: str) -> str:
         return response["TranslatedText"]
     except Exception as e:
         print("Error in translate",e)
+
+async def check_data_exists_in_cache(key):
+    try:
+        value = redis_cache.get(key)
+        print("value",value)
+        value = json.loads(value)
+
+        return value
+    except Exception as e:
+        print("Error in get cache --->",e)
+
+async def set_translated_data_cache(key,data):
+    try:
+        print("cache_key ===>",key)
+        print("data ===>",data)
+        data = json.dumps(data)
+
+        value = redis_cache.set(key,data)
+
+        return value
+    except Exception as e:
+        print("Error in set cache --->",e)
+
+def delete_translated_data_cache(key):
+    try:
+        redis_cache.delete(key)
+    except Exception as e:
+        print("Error in delete cache --->",e)
+
+# delete_translated_data_cache("product:2:s-lang:is,t-lang:en")
