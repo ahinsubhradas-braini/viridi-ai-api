@@ -1,7 +1,8 @@
+import json
 import logging
 import sys
-import json
 from datetime import datetime
+
 
 class JSONFormatter(logging.Formatter):
     def format(self, record):
@@ -14,6 +15,7 @@ class JSONFormatter(logging.Formatter):
             "line": record.lineno,
         }
         return json.dumps(log_record)
+
 
 # Common logger for entire app
 logger = logging.getLogger("fastapi-chatbot")

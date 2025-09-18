@@ -1,16 +1,15 @@
-from src.apps.v1.chat.constants import Chatbot_Constants
-
 async def is_malicious(query: str) -> bool:
     # Disallow write operations
     blacklist = ["insert", "update", "delete", "drop", "alter", "truncate"]
     return any(word in query.lower() for word in blacklist)
+
 
 async def secure_db_query_prompt(agent, user_query, user_id, max_retries=3):
     # if is_malicious(user_query):
     #     return {"message": Chatbot_Constants.OUT_OF_DOMAIN_RESPONSE}
 
     # System prompt to enforce rules
-    system_prompt =  f"""
+    system_prompt = f"""
     SYSTEM:
     - You are a SQL generator. 
     - Only output valid SQL queries as plain text.

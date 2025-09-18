@@ -1,5 +1,5 @@
-
 from jinja2 import Environment, FileSystemLoader
+
 
 class PromptManager:
     def __init__(self, prompts_dir: str = "prompts"):
@@ -11,7 +11,6 @@ class PromptManager:
         self.prompts_dir = prompts_dir
         self.env = Environment(loader=FileSystemLoader(prompts_dir))
 
-
     def render_prompt(self, prompt_name: str, **kwargs) -> str:
         """
         Render a prompt with variables.
@@ -21,5 +20,5 @@ class PromptManager:
         :return: Rendered prompt text
         """
         template = self.env.get_template(f"{prompt_name}.j2")
-        
+
         return template.render(**kwargs)

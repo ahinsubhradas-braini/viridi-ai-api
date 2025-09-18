@@ -61,5 +61,5 @@ SUPPORTED_LANGUAGES = {
     "uk": "Ukrainian",
     "ur": "Urdu",
     "vi": "Vietnamese",
-    "cy": "Welsh"
+    "cy": "Welsh",
 }

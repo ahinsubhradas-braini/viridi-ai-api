@@ -1,6 +1,10 @@
-import hmac, hashlib, time, json, secrets
+import hashlib
+import hmac
+import secrets
+import time
 
 SECRET_KEY = b"test1234"
+
 
 def generate_signature(method, path, expiry_secs=60):
     now = int(time.time())
@@ -8,11 +12,7 @@ def generate_signature(method, path, expiry_secs=60):
     nonce = secrets.token_hex(8)
 
     # Message format same as in FastAPI
-    message = f"{method}|{path}|{expiry}|{nonce}".encode() 
+    message = f"{method}|{path}|{expiry}|{nonce}".encode()
     signature = hmac.new(SECRET_KEY, message, hashlib.sha256).hexdigest()
 
-    return {
-        "signature": signature,
-        "expiry": expiry,
-        "nonce": nonce
-    }
+    return {"signature": signature, "expiry": expiry, "nonce": nonce}

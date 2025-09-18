@@ -16,7 +16,7 @@
 #         temperature=0,
 #         base_url = "https://generativelanguage.googleapis.com/v1beta/models"
 #     )
-    
+
 #     # Toolkit
 #     toolkit = SQLDatabaseToolkit(db=db, llm=llm)
 

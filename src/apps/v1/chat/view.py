@@ -34,7 +34,7 @@
 #     else:
 #         # Call the chatbot service to do the query and send the response as stream
 #         query_response = await ChatService.get_query_result(session_data.user_query, session_data.user_id)
-        
+
 #         print("query_response",query_response)
 
 #         async def event_generator():

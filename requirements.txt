@@ -49,3 +49,7 @@ langchain_google_genai == 2.1.8
 
 # aws or other infra libary
 boto3 == 1.40.21
+
+# Pre commit hooks & formatter
+pre-commit == 4.3.0
+ruff == 0.12.12

@@ -48,5 +48,9 @@ PyMySQL == 1.1.2
 langchain_openai == 0.3.33
 langchain_google_genai == 2.1.8
 
-# aws or other infra libary
+# Aws or other infra libary
 boto3 == 1.34.63
+
+# Pre commit hooks & formatter
+pre-commit == 4.3.0
+ruff == 0.12.12
