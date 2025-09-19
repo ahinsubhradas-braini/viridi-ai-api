@@ -25,6 +25,12 @@ class Settings(BaseSettings):
     db_host: str
     db_name: str
 
+    # Gemini free model
+    gemini_api_url: str
+    gemini_model: str
+    gemini_timeout: str
+    gemini_api_key: str
+
     # Llm creds
     open_router_key: str
     open_router_url: str
