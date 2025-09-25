@@ -13,7 +13,6 @@ def transform_data(api_data_url: dict, api_provider_name: str):
     """
     Transform 3rd party api response data
     """
-    return {"data": ""}
     # Fetch json data from the provided api_data_url
     input_schema = fetch_data_from_url(api_data_url)
     # Fetch json output from directory

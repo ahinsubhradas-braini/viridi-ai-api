@@ -1,6 +1,6 @@
 import uuid
 
-from fastapi import APIRouter, Header, HTTPException
+from fastapi import APIRouter, Header, HTTPException, Depends
 
 from src.apps.v1.translator.constants import MESSAGES
 from src.apps.v1.translator.language_constants import SUPPORTED_LANGUAGES
@@ -9,15 +9,16 @@ from src.apps.v1.translator.service import (
     get_translated_text,
 )
 from src.common.response.common_response_helper import success_response
+from src.common.security.hmac_custom_headers import hmac_headers
 from src.core.config import settings
 from src.utils.get_lang_msg import get_message
 
 router = APIRouter()
 
-
 @router.post("/translate")
 async def translate_module(
     req: TranslateRequest,
+    headers=Depends(hmac_headers),
     accept_language: str = Header(
         settings.default_locale,  # default value
         description="Language for response, e.g., 'en' or 'is'. Default is English.",
