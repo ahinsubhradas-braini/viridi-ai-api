@@ -59,3 +59,5 @@ https://viridi-ai.s3.ap-south-1.amazonaws.com/templates/test_04c07ab34b004fe684c
     pre-commit autoupdate
 
     pre-commit run --all-files
+
+    --no-verify
