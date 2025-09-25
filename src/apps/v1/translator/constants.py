@@ -1,2 +1,10 @@
-class Chatbot_Constants:
-    OUT_OF_DOMAIN_RESPONSE = "Thank you for the query. As of now I can only answer questions related to accounting, invoicing, purchase orders, pricing, suppliers and vendors. Please ask me something related to these topics."
+MESSAGES = {
+    "en": {
+        "SUCESS_TRASLATE": "Translate done successfully!",
+        "ERROR_TRASLATE": "Error in translate.Try again latter!",
+    },
+    "is": {  # Icelandic
+        "SUCESS_TRASLATE": "lokið með góðum árangri!",
+        "ERROR_TRASLATE": "Villa í þýðingu. Reyndu aftur síðar!",
+    },
+}

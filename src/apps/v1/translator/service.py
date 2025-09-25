@@ -68,8 +68,6 @@ async def check_data_exists_in_cache(key):
 
 async def set_translated_data_cache(key, data):
     try:
-        print("cache_key ===>", key)
-        print("data ===>", data)
         data = json.dumps(data)
 
         value = redis_cache.set(key, data)

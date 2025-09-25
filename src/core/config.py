@@ -15,6 +15,9 @@ class Settings(BaseSettings):
     application_url: str
     port: int
 
+    # Default lang for api response
+    default_locale: str
+
     # Swagger creds
     swagger_username: str
     swagger_password: str
@@ -56,6 +59,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
 
+# @lru_cache()
 def get_settings():
     return Settings()
 

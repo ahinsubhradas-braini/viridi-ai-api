@@ -11,6 +11,8 @@ async def hmac_auth_middleware(request: Request):
     # Skip all paths that do NOT start with /api/v1/
     if not request.url.path.startswith("/api/v1/"):
         return None
+    elif request.url.path == "/api/v1/ai-translator/translate":
+        return None
 
     signature = request.headers.get("X-Signature")
     expiry = request.headers.get("X-Expiry")
