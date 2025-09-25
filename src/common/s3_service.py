@@ -27,7 +27,6 @@ class Aws_S3_Service:
         try:
             print("bucket_name --->", bucket_name)
             print("key --->", key)
-            print("content --->", content)
             print("aws client --->", self.s3_client)
             extra_args = {"ContentType": content_type}
             if make_public:

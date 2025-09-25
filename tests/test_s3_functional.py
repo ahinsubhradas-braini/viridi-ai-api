@@ -34,7 +34,7 @@ def ejs_content():
 @pytest.fixture
 def test_key():
     # Unique key for each test run to avoid conflicts
-    return f"templates/test_{uuid.uuid4().hex}.ejs"
+    return f"templates/testnew_{uuid.uuid4().hex}.ejs"
 
 
 def test_upload_ejs_functional(s3_helper, bucket_name, ejs_content, test_key):

@@ -154,7 +154,7 @@ class TransformerAgent:
                         {"role": "user", "content": prompt},
                     ],
                     temperature=0.1,  # Lower temperature for more consistent output
-                    max_tokens=2600,  # Reasonable limit for template generation
+                    max_tokens=4096,  # Reasonable limit for template generation
                 )
 
                 # Track performance
@@ -241,7 +241,7 @@ class TransformerAgent:
         )
 
         public_url = S3_Helper.upload_ejs_as_object_to_s3(
-            "templates", f"{api_provider_name}.ejs", cleaned_code
+            "viridi-ai", f"templates/{api_provider_name}.ejs", cleaned_code
         )
 
         return public_url

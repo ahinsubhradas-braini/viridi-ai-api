@@ -1,6 +1,6 @@
 import uuid
 
-from fastapi import APIRouter, Header, HTTPException, Depends
+from fastapi import APIRouter, Depends, Header, HTTPException
 
 from src.apps.v1.translator.constants import MESSAGES
 from src.apps.v1.translator.language_constants import SUPPORTED_LANGUAGES
@@ -14,6 +14,7 @@ from src.core.config import settings
 from src.utils.get_lang_msg import get_message
 
 router = APIRouter()
+
 
 @router.post("/translate")
 async def translate_module(

@@ -1,0 +1,315 @@
+{
+  "Invoice": {
+    "ID": {
+      "_text": "<%= input_data.Invoice.ID %>"
+    },
+    "Note": {
+      "_text": "Veitt þjónusta í mars 2025  "
+    },
+    "DueDate": {
+      "_text": "2025-03-31"
+    },
+    "TaxTotal": {
+      "TaxAmount": {
+        "_text": "<%= input_data.Invoice.TaxTotal.TaxAmount['@text'] %>",
+        "_attributes": {
+          "currencyID": "<%= input_data.Invoice.TaxTotal.TaxAmount['@currencyID'] %>"
+        }
+      },
+      "TaxSubtotal": {
+        "TaxAmount": {
+          "_text": "<%= input_data.Invoice.TaxTotal.TaxSubtotal.TaxAmount['@text'] %>",
+          "_attributes": {
+            "currencyID": "<%= input_data.Invoice.TaxTotal.TaxSubtotal.TaxAmount['@currencyID'] %>"
+          }
+        },
+        "TaxCategory": {
+          "ID": {
+            "_text": "<%= input_data.Invoice.TaxTotal.TaxSubtotal.TaxCategory.ID['@text'] %>"
+          },
+          "Percent": {
+            "_text": "<%= input_data.Invoice.TaxTotal.TaxSubtotal.TaxCategory.Percent %>.00"
+          },
+          "TaxScheme": {
+            "ID": {
+              "_text": "<%= input_data.Invoice.TaxTotal.TaxSubtotal.TaxCategory.TaxScheme.ID['@text'] %>"
+            }
+          }
+        },
+        "TaxableAmount": {
+          "_text": "<%= input_data.Invoice.TaxTotal.TaxSubtotal.TaxableAmount['@text'] %>",
+          "_attributes": {
+            "currencyID": "<%= input_data.Invoice.TaxTotal.TaxSubtotal.TaxableAmount['@currencyID'] %>"
+          }
+        }
+      }
+    },
+    "IssueDate": {
+      "_text": "<%= input_data.Invoice.IssueDate %>"
+    },
+    "ProfileID": {
+      "_text": "urn:fdc:peppol.eu:2017:poacc:billing:01:1.0"
+    },
+    "InvoiceLine": {
+      "ID": {
+        "_text": "<%= input_data.Invoice.InvoiceLine[0].ID %>"
+      },
+      "Item": {
+        "Name": {
+          "_text": "<%= input_data.Invoice.InvoiceLine[0].Item.Name %>"
+        },
+        "ClassifiedTaxCategory": {
+          "ID": {
+            "_text": "<%= input_data.Invoice.InvoiceLine[0].Item.ClassifiedTaxCategory.ID['@text'] %>"
+          },
+          "Percent": {
+            "_text": "<%= input_data.Invoice.InvoiceLine[0].Item.ClassifiedTaxCategory.Percent %>.00"
+          },
+          "TaxScheme": {
+            "ID": {
+              "_text": "<%= input_data.Invoice.InvoiceLine[0].Item.ClassifiedTaxCategory.TaxScheme.ID['@text'] %>"
+            }
+          }
+        },
+        "SellersItemIdentification": {
+          "ID": {
+            "_text": "<%= input_data.Invoice.InvoiceLine[0].Item.SellersItemIdentification.ID %>"
+          }
+        }
+      },
+      "Price": {
+        "PriceAmount": {
+          "_text": "<%= input_data.Invoice.InvoiceLine[0].Price.PriceAmount['@text'] %>",
+          "_attributes": {
+            "currencyID": "<%= input_data.Invoice.InvoiceLine[0].Price.PriceAmount['@currencyID'] %>"
+          }
+        },
+        "BaseQuantity": {
+          "_text": "1.00",
+          "_attributes": {
+            "unitCode": "C62"
+          }
+        }
+      },
+      "InvoicedQuantity": {
+        "_text": "<%= input_data.Invoice.InvoiceLine[0].InvoicedQuantity['@text'] %>",
+        "_attributes": {
+          "unitCode": "<%= input_data.Invoice.InvoiceLine[0].InvoicedQuantity['@unitCode'] %>"
+        }
+      },
+      "LineExtensionAmount": {
+        "_text": "<%= input_data.Invoice.InvoiceLine[0].LineExtensionAmount['@text'] %>",
+        "_attributes": {
+          "currencyID": "<%= input_data.Invoice.InvoiceLine[0].LineExtensionAmount['@currencyID'] %>"
+        }
+      }
+    },
+    "_attributes": {
+      "xmlns": "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2",
+      "xmlns:cac": "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2",
+      "xmlns:cbc": "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2",
+      "xmlns:ext": "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2",
+      "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance"
+    },
+    "PaymentMeans": {
+      "PaymentMeansCode": {
+        "_text": "57"
+      }
+    },
+    "PaymentTerms": {
+      "Note": {
+        "_text": "Dráttarvextir reiknast frá gjalddaga ef reikningur er ógreiddur eftir eindaga."
+      }
+    },
+    "TaxPointDate": {
+      "_text": "<%= input_data.Invoice.TaxPointDate %>"
+    },
+    "UBLVersionID": {
+      "_text": "<%= input_data.Invoice.UBLVersionID %>"
+    },
+    "InvoicePeriod": {
+      "EndDate": {
+        "_text": "<%= input_data.Invoice.Delivery.ActualDeliveryDate %>"
+      },
+      "StartDate": {
+        "_text": "2025-03-01"
+      }
+    },
+    "OrderReference": {
+      "ID": {
+        "_text": "0"
+      }
+    },
+    "CustomizationID": {
+      "_text": "urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0"
+    },
+    "InvoiceTypeCode": {
+      "_text": "<%= input_data.Invoice.InvoiceTypeCode['@text'] %>"
+    },
+    "LegalMonetaryTotal": {
+      "PayableAmount": {
+        "_text": "<%= input_data.Invoice.LegalMonetaryTotal.PayableAmount['@text'] %>",
+        "_attributes": {
+          "currencyID": "<%= input_data.Invoice.LegalMonetaryTotal.PayableAmount['@currencyID'] %>"
+        }
+      },
+      "PrepaidAmount": {
+        "_text": "0.00",
+        "_attributes": {
+          "currencyID": "<%= input_data.Invoice.LegalMonetaryTotal.PayableAmount['@currencyID'] %>"
+        }
+      },
+      "TaxExclusiveAmount": {
+        "_text": "<%= input_data.Invoice.LegalMonetaryTotal.TaxExclusiveAmount['@text'] %>",
+        "_attributes": {
+          "currencyID": "<%= input_data.Invoice.LegalMonetaryTotal.TaxExclusiveAmount['@currencyID'] %>"
+        }
+      },
+      "TaxInclusiveAmount": {
+        "_text": "<%= input_data.Invoice.LegalMonetaryTotal.TaxInclusiveAmount['@text'] %>",
+        "_attributes": {
+          "currencyID": "<%= input_data.Invoice.LegalMonetaryTotal.TaxInclusiveAmount['@currencyID'] %>"
+        }
+      },
+      "LineExtensionAmount": {
+        "_text": "<%= input_data.Invoice.LegalMonetaryTotal.LineExtensionAmount['@text'] %>",
+        "_attributes": {
+          "currencyID": "<%= input_data.Invoice.LegalMonetaryTotal.LineExtensionAmount['@currencyID'] %>"
+        }
+      }
+    },
+    "DocumentCurrencyCode": {
+      "_text": "<%= input_data.Invoice.DocumentCurrencyCode['@text'] %>"
+    },
+    "AccountingCustomerParty": {
+      "Party": {
+        "PartyName": {
+          "Name": {
+            "_text": "<%= input_data.Invoice.AccountingCustomerParty.Party.PartyName.Name %>"
+          }
+        },
+        "EndpointID": {
+          "_text": "<%= input_data.Invoice.AccountingCustomerParty.Party.EndpointID['@text'] %>",
+          "_attributes": {
+            "schemeID": "0196"
+          }
+        },
+        "PostalAddress": {
+          "Country": {
+            "IdentificationCode": {
+              "_text": "<%= input_data.Invoice.AccountingCustomerParty.Party.PostalAddress.Country.IdentificationCode['@text'] %>"
+            }
+          },
+          "CityName": {
+            "_text": "<%= input_data.Invoice.AccountingCustomerParty.Party.PostalAddress.CityName %>"
+          },
+          "PostalZone": {
+            "_text": "<%= input_data.Invoice.AccountingCustomerParty.Party.PostalAddress.PostalZone %>"
+          },
+          "StreetName": {
+            "_text": "<%= input_data.Invoice.AccountingCustomerParty.Party.PostalAddress.StreetName %>"
+          }
+        },
+        "PartyLegalEntity": {
+          "CompanyID": {
+            "_text": "<%= input_data.Invoice.AccountingCustomerParty.Party.PartyLegalEntity.CompanyID['@text'] %>",
+            "_attributes": {
+              "schemeID": "0196"
+            }
+          },
+          "RegistrationName": {
+            "_text": "<%= input_data.Invoice.AccountingCustomerParty.Party.PartyLegalEntity.RegistrationName %>"
+          }
+        },
+        "PartyIdentification": {
+          "ID": {
+            "_text": "<%= input_data.Invoice.AccountingCustomerParty.Party.PartyIdentification.ID['@text'] %>",
+            "_attributes": {
+              "schemeID": "0196"
+            }
+          }
+        }
+      }
+    },
+    "AccountingSupplierParty": {
+      "Party": {
+        "Contact": {
+          "Name": {
+            "_text": "1"
+          },
+          "Telephone": {
+            "_text": "<%= input_data.Invoice.AccountingSupplierParty.Party.Contact.Telephone %>"
+          },
+          "ElectronicMail": {
+            "_text": "<%= input_data.Invoice.AccountingSupplierParty.Party.Contact.ElectronicMail %>"
+          }
+        },
+        "PartyName": {
+          "Name": {
+            "_text": "<%= input_data.Invoice.AccountingSupplierParty.Party.PartyName.Name %>"
+          }
+        },
+        "EndpointID": {
+          "_text": "<%= input_data.Invoice.AccountingSupplierParty.Party.EndpointID['@text'] %>",
+          "_attributes": {
+            "schemeID": "0196"
+          }
+        },
+        "PostalAddress": {
+          "Country": {
+            "IdentificationCode": {
+              "_text": "<%= input_data.Invoice.AccountingSupplierParty.Party.PostalAddress.Country.IdentificationCode['@text'] %>"
+            }
+          },
+          "CityName": {
+            "_text": "<%= input_data.Invoice.AccountingSupplierParty.Party.PostalAddress.CityName %>"
+          },
+          "PostalZone": {
+            "_text": "<%= input_data.Invoice.AccountingSupplierParty.Party.PostalAddress.PostalZone %>"
+          },
+          "StreetName": {
+            "_text": "<%= input_data.Invoice.AccountingSupplierParty.Party.PostalAddress.StreetName %>"
+          }
+        },
+        "PartyTaxScheme": {
+          "CompanyID": {
+            "_text": "<%= input_data.Invoice.AccountingSupplierParty.Party.PartyTaxScheme.CompanyID['@text'] %>"
+          },
+          "TaxScheme": {
+            "ID": {
+              "_text": "<%= input_data.Invoice.AccountingSupplierParty.Party.PartyTaxScheme.TaxScheme.ID['@text'] %>"
+            }
+          }
+        },
+        "PartyLegalEntity": {
+          "CompanyID": {
+            "_text": "<%= input_data.Invoice.AccountingSupplierParty.Party.PartyLegalEntity.CompanyID['@text'] %>",
+            "_attributes": {
+              "schemeID": "0196"
+            }
+          },
+          "RegistrationName": {
+            "_text": "<%= input_data.Invoice.AccountingSupplierParty.Party.PartyLegalEntity.RegistrationName %>"
+          }
+        },
+        "PartyIdentification": {
+          "ID": {
+            "_text": "<%= input_data.Invoice.AccountingSupplierParty.Party.PartyIdentification.ID['@text'] %>",
+            "_attributes": {
+              "schemeID": "0196"
+            }
+          }
+        }
+      }
+    },
+    "AdditionalDocumentReference": {
+      "ID": {
+        "_text": "2025-04-25"
+      },
+      "DocumentDescription": {
+        "_text": "EINDAGI"
+      }
+    }
+  },
+  "_comment": "dk hugbúnaður ehf. (UBL-Invoice-2.1.xml)"
+}
