@@ -1,0 +1,36 @@
+/* Custom CSS for Material for MkDocs */
+
+/* Change the header color */
+:root {
+  /* Header background color */
+  --md-primary-fg-color: #4dba06; /* A custom blue */
+
+  /* Header text color (use a light color for dark backgrounds) */
+  --md-primary-bg-color: #ffffff;
+}
+
+/* Color the parent "General" module name */
+/* This targets the parent <div> for the dropdown */
+.md-nav__item .md-nav__title[for="__nav_1"] {
+  color: #0073e6; /* Example: blue */
+  font-weight: bold;
+}
+
+/* Color the parent "AI Chatbot" module name */
+/* This targets the parent <div> for the dropdown */
+.md-nav__item .md-nav__title[for="__nav_2"] {
+  color: #c9852f; /* Example: brown/orange */
+  font-weight: bold;
+}
+
+/* Custom CSS for handling PDF display on different devices */
+
+/* On screens smaller than 991px (typically mobile), hide the iframe and show the download link */
+@media (max-width: 991px) {
+    .pdf-container iframe {
+        display: none;
+    }
+    .pdf-container .pdf-download-link {
+        display: block;
+    }
+}

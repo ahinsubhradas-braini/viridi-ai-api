@@ -7,6 +7,7 @@ from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from fastapi.staticfiles import StaticFiles
 from slowapi.middleware import SlowAPIMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 
@@ -109,7 +110,7 @@ async def verify_credentials(credentials: HTTPBasicCredentials = Depends(securit
 
 
 # Protect Swagger UI
-@app.get("/docs", include_in_schema=False)
+@app.get("/api-docs", include_in_schema=False)
 async def get_documentation(_: bool = Depends(verify_credentials)):
     return get_swagger_ui_html(
         openapi_url="/openapi.json",
@@ -130,3 +131,6 @@ async def openapi(_: bool = Depends(verify_credentials)):
 
 # Include routers
 app.include_router(api_v1_router, prefix="/api/v1")
+
+# Mount MkDocs site at /documentation
+app.mount("/dev-docs", StaticFiles(directory="site", html=True), name="documentation")
